@@ -1,0 +1,34 @@
+$nomention
+$var[i;0]
+$var[msg;$message]
+$textSplit[$var[msg];$textList[]
+$textSplit[$splitText[2];\]]
+$var[textList;$splitText[1]]
+$var[list;$replaceText[$splitText[1];\\;;
+]]
+$textSplit[$var[msg];$findText[]
+$textSplit[$optOff[$splitText[2]];\]]
+$textSplit[$optOff[$splitText[1]]\\;;\\;]
+$var[word;$optOff[$splitText[1]]]
+$var[index;$optOff[$splitText[2]]]
+
+$textSplit[$var[msg];$filterText[]
+$textSplit[$optOff[$splitText[2]];\]]
+$textSplit[$optOff[$splitText[1]]\\;;\\;]
+$var[filter_word;$optOff[$splitText[1]]]
+$var[separator;$optOff[$splitText[2]]]
+                                                                                                                                                $c[]
+$var[find;%{DOL}%if[%{DOL}%textSplit[$replaceText[$replaceText[$replaceText[$replaceText[$var[list];\];\\]];$;%{DOL}%trimSpace[$\]];\\;;\\\\\\\;];
+;\\;%!%\]%{DOL}%checkContains[%{DOL}%optOff[%{DOL}%splitText[1\]\]\\;$replaceText[$replaceText[$replaceText[$var[word];\];\\]];$;%{DOL}%trimSpace[$\]];\\;;\\\\\\;]\]==true\] %{DOL}%var[found.%{DOL}%var[i\\;%{DOL}%sum[%{DOL}%var[i\]\\;1\]\]%{DOL}%var[i\]\\;%{DOL}%splitText[1\]\] %{DOL}%endif %{DOL}%if[%{DOL}%textSplit[]\\;%!%\]%{DOL}%checkContains[%{DOL}%optOff[%{DOL}%splitText[1\]\]\\;$replaceText[$replaceText[$replaceText[$var[word];\];\\]];$;%{DOL}%trimSpace[$\]];\\;;\\\\\;]\]==true\] %{DOL}%var[found.%{DOL}%var[i\\;%{DOL}%sum[%{DOL}%var[i\]\\;1\]\]%{DOL}%var[i\]\\;%{DOL}%splitText[1\]\] %{DOL}%endif]
+$eval[$var[find]]
+
+$var[filter;%{DOL}%if[%{DOL}%textSplit[$replaceText[$replaceText[$replaceText[$replaceText[$var[list];\];\\]];$;%{DOL}%trimSpace[$\]];\\;;\\\\\\\;];
+;\\;%!%\]%{DOL}%checkContains[%{DOL}%optOff[%{DOL}%splitText[1\]\]\\;$replaceText[$replaceText[$replaceText[$var[filter_word];\];\\]];$;%{DOL}%trimSpace[$\]];\\;;\\\\\\;]\]==true\] %{DOL}%var[filtered\\;%{DOL}%var[filtered\]$var[separator]%{DOL}%splitText[1\]\] %{DOL}%endif %{DOL}%if[%{DOL}%textSplit[]\\;%!%\]%{DOL}%checkContains[%{DOL}%optOff[%{DOL}%splitText[1\]\]\\;$replaceText[$replaceText[$replaceText[$var[word];\];\\]];$;%{DOL}%trimSpace[$\]];\\;;\\\\\;]\]==true\] %{DOL}%var[filtered\\;%{DOL}%var[filtered\]$var[separator]%{DOL}%splitText[1\]\] %{DOL}%endif]
+$eval[$var[filter]]
+
+$textSplit[$trimSpace[$var[list]];
+]
+
+$var[code;$replaceText[$replaceText[$replaceText[$replaceText[$replaceText[$var[msg];$textList[$var[textList]\];];$findText[$var[word]\];$var[found.1]];$findText[$var[word]\\;$var[index]\];$var[found.$var[index]]];$textListIndex;$getTextSplitIndex[$var[found.1]]];$filterText[$var[filter_word]\\;$var[separator]\];$replaceText[$trimSpace[$var[filtered]];$var[separator];;1]]]
+$eval[$var[code]]
+$endif 
