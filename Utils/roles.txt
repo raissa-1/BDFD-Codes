@@ -1,0 +1,35 @@
+$nomention
+$disableSpecialEscaping 
+$c[settings (you can change these)]
+$var[user;$findUser[$message]]
+$var[sort;asc] $c[change 'asc' to 'desc' to sort from lowest role]
+$var[separator;
+] $c[the separator to separate each roles]
+
+$c[escapes special characters from role names]
+$var[escaped;%{DOL}%findRole[$replaceText[$replaceText[$replaceText[$replaceText[$userRoles[$var[user]];\\;;\\\\\\\\;];\];\$c[]\]];$;%{DOL}%toLowercase[$\]];
+; \] %{DOL}%findRole[]\]]
+
+$c[role IDs]
+$var[roleIDs;$trimSpace[$eval[$var[escaped]]]]
+
+$c[sorts the role positions]
+$var[pos;%{DOL}%try %{DOL}%rolePosition[$replaceText[$var[roleIDs]; ;\]\\\\;%{DOL}%endtry %{DOL}%try %{DOL}%rolePosition[]\] %{DOL}%endtry] $try 
+
+$var[sortedPos;role.$sort[$unescape[$eval[$var[pos]]];$var[sort];-1; role.]] $catch $var[none;true] $endtry
+
+$c[saves the role of each positions into variables]
+$var[as;%{DOL}%try %{DOL}%textSplit[$replaceText[$var[roleIDs]; ;\\;|\] %{DOL}%optOff[%{DOL}%var[role.%{DOL}%rolePosition[%{DOL}%splitText[1\]\]\\;%{DOL}%splitText[1\]\]\] %{DOL}%endtry %{DOL}%try %{DOL}%textSplit[]\\;|\] %{DOL}%optOff[%{DOL}%var[role.%{DOL}%rolePosition[%{DOL}%splitText[1\]\]\\;%{DOL}%splitText[1\]\]\] %{DOL}%endtry]
+$eval[$var[as]]
+
+$c[sorts the roles based on the positions]
+$if[$var[none]!=true]
+$var[sortedRoles;<@&%{DOL}%var[$replaceText[$var[sortedPos]; ;\]>$var[separator]<@&%{DOL}%var[]\]>]
+$else
+
+$c[output if the user has no roles]
+$var[sortedRoles;None]
+$endif
+
+$c[output]
+$description[$eval[$var[sortedRoles]]]
