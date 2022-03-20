@@ -6,7 +6,7 @@ The list of texts. This is where `$findText` searches the text from.
 ### `$findText[text;(index)]`
 Searches a text from the list
 
-### `$filterText[text]`
+### `$filterText[text;separator]`
 Returns every text that matches
 
 ### `$textListIndex`
