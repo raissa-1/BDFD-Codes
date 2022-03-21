@@ -1,0 +1,50 @@
+$nomention 
+$suppressErrors 
+$allowUserMentions[]
+$reply
+
+$textSplit[$message[1];:]
+$c[ find by emoji ]
+$if[$or[$splitText[1]==<;$splitText[1]==<a]]
+    $if[$splitText[1]==<]
+        $var[type;png]
+    $else
+        $var[type;gif]
+    $endif
+    $if[$splitText[3]==$replaceText[$splitText[3];>;;-1]>]
+        $var[name;$splitText[2]]  
+        $var[ID;$replaceText[$splitText[3];>;;-1]]
+        $var[raw;`$message[1]`]
+    $endif
+$else $c[ find by name ]
+    $textSplit[$customEmoji[$message[1]];:]
+    $var[name;$message[1]]
+    $var[ID;$replaceText[$optOff[$splitText[3]];>;;-1]]
+    $var[raw;`$customEmoji[$message[1]]`]
+    $if[$optOff[$splitText[1]]==<]
+        $var[type;png]
+    $else
+        $var[type;gif]
+        $var[name;$splitText[2]]
+    $endif
+$endif 
+
+$httpGet[https://cdn.discordapp.com/emojis/$var[ID].$var[type]]
+$if[$charCount[$httpResult]==0]
+    Couldn't find emoji
+$else
+    $title[Emoji info - :$var[name]:]
+    $if[$getRoleColor[$highestRole[$authorID]]==0]
+        $color[babbbf]
+    $else
+        $color[#$getRoleColor[$highestRole[$authorID]]]
+    $endif
+$description[Created at <t:$calculate[($var[ID] / 4194304 + 1420070400000) / 1000]:F>
+**ID:** $var[ID]
+**API Format:** $var[raw]
+
+[[link\]\](https://cdn.discordapp.com/emojis/$var[ID].$var[type])]
+$image[https://cdn.discordapp.com/emojis/$var[ID].$var[type]]
+$footer[Requested by $username#$discriminator[]]
+$footerIcon[$authorAvatar]
+$endif
