@@ -1,0 +1,6 @@
+$nomention
+$textSplit[$message;]
+$var[extract;%{DOL}%textSplit[$joinSplitText[\\;\]%{DOL}%if[%{DOL}%isNumber[%{DOL}%optOff[%{DOL}%splitText[1\]\]\]==true\]%{DOL}%var[numbers\\;%{DOL}%var[numbers\]%{DOL}%splitText[1\]\]%{DOL}%endif %{DOL}%textSplit[]\\;\]%{DOL}%if[%{DOL}%isNumber[%{DOL}%optOff[%{DOL}%splitText[1\]\]\]==true\]%{DOL}%var[numbers\\;%{DOL}%var[numbers\]%{DOL}%splitText[1\]\]%{DOL}%endif]
+
+$eval[$var[extract]]
+`$var[numbers]`
