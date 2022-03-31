@@ -1,50 +1,30 @@
 $nomention
-$var[s;$message]
-$var[m;$calculate[$var[s]/60]]
-$var[h;$calculate[$var[m]/60]]
-$var[d;$calculate[$var[h]/24]]
-$var[w;$calculate[$var[d]/7]]
-$var[mo;$calculate[$var[w]/30]]
-$var[y;$calculate[$var[mo]/12]]
+$var[input;$message]
+$var[years;$calculate[$var[input] / 31536000]]
+$var[weeks;$calculate[$var[input] % 31536000 / 604800]]
+$var[days;$calculate[$var[input] % 31536000 % 604800 / 86400]]
+$var[hours;$calculate[$var[input] % 31536000 % 86400 / 3600]]
+$var[minutes;$calculate[$var[input] % 31536000 % 86400 % 3600 / 60]]
+$var[seconds;$calculate[$var[input] % 31536000 % 86400 % 3600 % 60]]
 
-$var[years;$var[y]]
-$var[months;$calculate[$var[mo]-$var[y]*12]]
-$var[weeks;$calculate[$var[w]-$var[mo]*30]]
-$var[days;$calculate[$var[d]-$var[w]*7]]
-$var[hours;$calculate[$var[h]-$var[d]*24]]
-$var[minutes;$calculate[$var[m]-$var[h]*60]]
-$var[seconds;$calculate[$var[s]-$var[m]*60]]
-
-$textSplit[$trimSpace[$if[$var[years]!=0] $var[years] $trimSpace[
+$textSplit[$if[$var[years]!=0] $var[years] $trimSpace[
     $if[$var[years]==1] year $else years $endif
-    ]
-$endif
-] 
-$trimSpace[$if[$var[months]!=0] $var[months] $trimSpace[
-    $if[$var[months]==1] month $else months $endif
-    ]
-$endif
-] 
-$trimSpace[$if[$var[days]!=0] $var[days] $trimSpace[
+]$endif
+$if[$var[weeks]!=0] $var[weeks] $trimSpace[
+    $if[$var[weeks]==1] week $else weeks $endif
+]$endif
+$if[$var[days]!=0] $var[days] $trimSpace[
     $if[$var[days]==1] day $else days $endif
-    ]
-$endif
-] 
-$trimSpace[$if[$var[hours]!=0] $var[hours] $trimSpace[
+]$endif
+$if[$var[hours]!=0] $var[hours] $trimSpace[
     $if[$var[hours]==1] hour $else hours $endif
-    ]
-$endif
-] 
-$trimSpace[$if[$var[minutes]!=0] $var[minutes] $trimSpace[
+]$endif
+$if[$var[minutes]!=0] $var[minutes] $trimSpace[
     $if[$var[minutes]==1] minute $else minutes $endif
-    ]
-$endif
-] 
-$trimSpace[$if[$var[seconds]!=0] $var[seconds] $trimSpace[
+]$endif
+$if[$var[seconds]!=0] $var[seconds] $trimSpace[
     $if[$var[seconds]==1] second $else seconds $endif
-    ] 
-$endif
-];
+]$endif;
 ]
 
 $var[lastTime;$splitText[>]]
