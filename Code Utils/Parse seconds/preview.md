@@ -2,4 +2,6 @@
 Converts seconds to time format that's actually readable, also support years. Useful for custom cooldowns. 
 
 ### Preview
-![20220327_151133](https://user-images.githubusercontent.com/98183987/160270964-5b2cf6d4-0e77-4c51-a702-4c1b947000ac.jpg)
+![20220401_100555](https://user-images.githubusercontent.com/98183987/161180454-0a03cf46-c35c-4a59-b9bd-e5643cf776b0.jpg)
+
+*removed months due to bugs and inaccuracy, years is still supported however.*
