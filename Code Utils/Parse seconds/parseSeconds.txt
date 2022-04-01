@@ -1,12 +1,23 @@
 $nomention
 $var[input;$message]
+
+$c[whether to use weeks or just days]
+$var[use weeks;true]
+
+$c[the calculator]
 $var[years;$calculate[$var[input] / 31536000]]
-$var[weeks;$calculate[$var[input] % 31536000 / 604800]]
-$var[days;$calculate[$var[input] % 31536000 % 604800 / 86400]]
+$if[$var[use weeks]]
+    $var[weeks;$calculate[$var[input] % 31536000 / 604800]]
+    $var[days;$calculate[$var[input] % 31536000 % 604800 / 86400]]
+$else
+    $var[weeks;0]
+    $var[days;$calculate[$var[input] % 31536000 / 86400]]
+$endif
 $var[hours;$calculate[$var[input] % 31536000 % 86400 / 3600]]
 $var[minutes;$calculate[$var[input] % 31536000 % 86400 % 3600 / 60]]
 $var[seconds;$calculate[$var[input] % 31536000 % 86400 % 3600 % 60]]
 
+$c[removes blanks]
 $textSplit[$if[$var[years]!=0] $var[years] $trimSpace[
     $if[$var[years]==1] year $else years $endif
 ]$endif
@@ -31,4 +42,5 @@ $var[lastTime;$splitText[>]]
 $removeSplitTextElement[$getTextSplitLength]
 $var[parsedTime;$if[$joinSplitText[, ]!=]$joinSplitText[, ] and $endif$var[lastTime]]
 
+$c[output]
 $var[parsedTime]
