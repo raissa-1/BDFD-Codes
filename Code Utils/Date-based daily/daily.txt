@@ -1,0 +1,45 @@
+$nomention
+$textSplit[$date;-]
+$var[month;$splitText[2]]
+
+$textSplit[$getUserVar[last_daily];-]
+
+$if[$year==$splitText[1]]
+    $if[$var[month]==$optOff[$splitText[2]]]
+        $if[$sub[$day;0]==$sub[$splitText[3];0]]
+            $var[a;cooldown]
+        $elseif[$sub[$day;0]==$sum[$splitText[3];1]]
+            $var[a;streak]
+        $else
+            $var[a;reset]
+        $endif
+    $elseif[$splitText[2]==02]
+        $if[$and[$splitText[3]>=28;$day==01]]
+            $var[a;streak]
+        $else
+            $var[a;reset]
+        $endif
+    $else
+        $if[$and[$splitText[3]>=30;$day==01]]
+            $var[a;streak]
+        $else
+            $var[a;reset]
+        $endif
+    $endif
+$elseif[$and[$splitText[2]==12;$splitText[3]==31;$day==1]]
+    $var[a;streak]
+$else
+    $var[a;reset]
+$endif    
+
+$if[$var[a]==reset]
+    streak ×0 
+    $setUserVar[daily_streak;0]
+    $setUserVar[last_daily;$date]
+$elseif[$var[a]==streak]
+    streak ×$sum[$getUserVar[daily_streak];1]
+    $setUserVar[daily_streak;$sum[$getUserVar[daily_streak];1]]
+    $setUserVar[last_daily;$date]
+$else
+    cooldown ends in $sub[24;$hour]h$sub[60;$minute]m$sub[60;$second]s
+$endif
