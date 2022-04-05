@@ -19,14 +19,24 @@ $if[$year==$splitText[1]]
         $else
             $var[a;reset]
         $endif
+    $elseif[$splitText[2]<8]
+        $if[$and[$modulo[$splitText[2];2]==1;$splitText[3]==31;$day==01]]
+            $var[a;streak]
+        $elseif[$and[$modulo[$splitText[2];2]==0;$splitText[3]==30;$day==01]]
+            $var[a;streak]
+        $else
+            $var[a;reset]
+        $endif
     $else
-        $if[$and[$splitText[3]>=30;$day==01]]
+        $if[$and[$modulo[$splitText[2];2]==0;$splitText[3]==31;$day==01]]
+            $var[a;streak]
+        $elseif[$and[$modulo[$splitText[2];2]==1;$splitText[3]==30;$day==01]]
             $var[a;streak]
         $else
             $var[a;reset]
         $endif
     $endif
-$elseif[$and[$splitText[2]==12;$splitText[3]==31;$day==1]]
+$elseif[$and[$splitText[2]==12;$splitText[3]==31;$day==01]]
     $var[a;streak]
 $else
     $var[a;reset]
@@ -41,5 +51,5 @@ $elseif[$var[a]==streak]
     $setUserVar[daily_streak;$sum[$getUserVar[daily_streak];1]]
     $setUserVar[last_daily;$date]
 $else
-    cooldown ends in $sub[24;$hour]h$sub[60;$minute]m$sub[60;$second]s
+    cooldown ends in $sub[23;$hour]h$sub[59;$minute]m$sub[59;$second]s
 $endif
