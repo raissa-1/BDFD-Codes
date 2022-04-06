@@ -1,0 +1,51 @@
+$nomention
+$allowUserMentions[]
+$reply
+$ignoreLinks 
+
+$textSplit[$message[1];:]
+
+$if[$and[$checkContains[$splitText[1];<]==true;$checkContains[$splitText[3];>]==true]]
+    $if[$splitText[1]==<]
+        $var[format;png]
+    $elseif[$splitText[1]==<a]
+        $var[format;gif]
+    $endif
+    
+    $if[$message[2]!=]
+        $var[name;$message[2]]
+    $else
+        $var[name;$splitText[2]]
+    $endif
+    
+    $var[id;$replaceText[$splitText[3];>;]]
+    $var[url;https://cdn.discordapp.com/emojis/$var[id].$var[format]]
+
+$else
+    $var[name;$message[2]]
+  
+    $if[$removeLinks[$message[1]]==]
+        $var[url;$message[1]]
+    $endif
+  
+$endif
+
+$if[$message==]
+    The correct usage is `<emoji / image link> [emoji name]`
+$else
+    $try
+        Added emoji `:$var[name]:` $addEmoji[$var[name];$var[url];yes]
+    $catch
+        $if[$or[$checkContains[$error[message];download]==true;$var[url]==]]
+            That doesn't seems to be a valid emoji/url
+        $elseif[$var[name]==]
+            You have to specify a name for the emoji
+        $elseif[$checkContains[$error[message];MAX_SIZE]]
+            File can't be larger than 256kb
+        $elseif[$checkContains[$error[message];Maximum number]]
+            Maximum number of emojis reached
+        $else
+            $error[message]
+        $endif
+    $endtry
+$endif
